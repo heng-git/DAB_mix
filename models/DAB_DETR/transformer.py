@@ -226,21 +226,35 @@ class Transformer(nn.Module):
         )
         topk_coords_unact = topk_coords_unact.detach()
         ##改
-        refpoint_embed_=topk_coords_unact
-
-        # reference_points = topk_coords_unact.sigmoid()
+        refpoint_embed=topk_coords_unact
+        # init_box_proposal = torch.gather(output_proposals, 1,
+        #                                  topk_proposals.unsqueeze(-1).repeat(1, 1, 4)).sigmoid()  # sigmoid
         # init_reference_out = refpoint_embed_ #没用
         ##
 
-        # pos_trans_out = self.pos_trans_norm(
-        #     self.pos_trans(self.get_proposal_pos_embed(topk_coords_unact))
-        # )
-        ##自己加的
-        # query_embed = gen_sineembed_for_position(refpoint_embed)
+        pos_trans_out = self.pos_trans_norm(
+            self.pos_trans(self.get_proposal_pos_embed(topk_coords_unact))
+        )
+        #自己加的
+        query_embed = gen_sineembed_for_position(refpoint_embed)
         num_queries = refpoint_embed.shape[0]#100
-        ##
-        tgt = torch.zeros(num_queries, bs, self.d_model, device=refpoint_embed.device)#100*bs*256
         # tgt = query_embed
+        # query_embed, _ = torch.split(pos_trans_out, c, dim=2)
+        #
+        # tgt = torch.zeros(num_queries, bs, self.d_model, device=refpoint_embed.device)#100*bs*256
+        # tgt = query_embed
+        # gather tgt
+        tgt_undetach = torch.gather(output_memory, 1, topk_proposals.unsqueeze(-1).repeat(1, 1, self.d_model))
+    # if self.embed_init_tgt:
+    #     tgt_ = self.tgt_embed.weight[:, None, :].repeat(1, bs, 1).transpose(0, 1)  # nq, bs, d_model
+    # else:
+        tgt_ = tgt_undetach.detach().transpose(0,1)
+        tgt=tgt_
+        # if refpoint_embed is not None:
+        #     refpoint_embed = torch.cat([refpoint_embed, refpoint_embed_], dim=1)
+        #     tgt = torch.cat([tgt, tgt_], dim=1)
+        # else:
+        #     refpoint_embed, tgt = refpoint_embed_, tgt_
         # refpoint_embed, _ = torch.split(pos_trans_out, c, dim=2)
         # refpoint_embed=refpoint_embed.transpose(0,1)
         ######################################################
@@ -257,7 +271,8 @@ class Transformer(nn.Module):
                                       # reference_points,
                                       #############
                                       memory, memory_key_padding_mask=mask,
-                          pos=pos_embed, refpoints_unsigmoid=reference_points.transpose(0,1))
+                          pos=pos_embed,  refpoints_unsigmoid=refpoint_embed.transpose(0,1)
+                                      )
         return hs, references,enc_outputs_class, enc_outputs_coord_unact
 
 

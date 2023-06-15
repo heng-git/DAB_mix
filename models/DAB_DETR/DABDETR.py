@@ -193,8 +193,8 @@ class DABDETR(nn.Module):
         # default pipeline
         embedweight = self.refpoint_embed.weight#100*4
         ##############################
-        # hs, reference,enc_outputs_class, enc_outputs_coord_unact= self.transformer(self.input_proj(src), mask, embedweight, pos[-1])#取最后一层的位置编码
-        hs, reference = self.transformer(self.input_proj(src), mask,embedweight, pos[-1])  # 取最后一层的位置编码
+        # hs, reference = self.transformer(self.input_proj(src), mask,embedweight, pos[-1])  # 取最后一层的位置编码
+        hs, reference,enc_outputs_class, enc_outputs_coord_unact= self.transformer(self.input_proj(src), mask, embedweight, pos[-1])#取最后一层的位置编码
         #########################
         
         if not self.bbox_embed_diff_each_layer:
@@ -223,11 +223,11 @@ class DABDETR(nn.Module):
         if self.aux_loss:
             out['aux_outputs'] = self._set_aux_loss(outputs_class, outputs_coord)
         ##########################
-        # enc_outputs_coord = enc_outputs_coord_unact.sigmoid()
-        # out["enc_outputs"] = {
-        #     "pred_logits": enc_outputs_class,
-        #     "pred_boxes": enc_outputs_coord,
-        # }
+        enc_outputs_coord = enc_outputs_coord_unact.sigmoid()
+        out["enc_outputs"] = {
+            "pred_logits": enc_outputs_class,
+            "pred_boxes": enc_outputs_coord,
+        }
         ##############################
         return out
 
@@ -399,7 +399,7 @@ class SetCriterion(nn.Module):
         outputs_without_aux = {
             k: v
             for k, v in outputs.items()
-            if k != "aux_outputs" #and k != "enc_outputs"
+            if k != "aux_outputs" and k != "enc_outputs"
         }
 ######################################
         # Retrieve the matching between the outputs of the last layer and the targets
