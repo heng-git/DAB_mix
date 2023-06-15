@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteMappingsManager">
+    <list>
+      <list>
+        <remote-mappings server-id="python@sftp://root@172.20.2.27:30197/Object_detection/anaconda3/envs/ZSH/bin/python3.7">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/Object_detection/ZSH/DAB-DETR/DAB-DETR" />
+            </list>
+          </settings>
+        </remote-mappings>
+        <remote-mappings server-id="python@sshConfig://DAB-DETR/Object_detection/anaconda3/envs/ZSH/bin/python3.7">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/Object_detection/ZSH/DAB-DETR" />
+            </list>
+          </settings>
+        </remote-mappings>
+        <remote-mappings server-id="python@sftp://root@172.20.2.27:30197/Object_detection/anaconda3/envs/ZSH1/bin/python3.8">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/Object_detection/ZSH/DAB-DETR" />
+            </list>
+          </settings>
+        </remote-mappings>
+        <remote-mappings server-id="python@sftp://root@172.20.2.27:30197/Object_detection/anaconda3/envs/HTj/bin/python3.8">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/Object_detection/ZSH/DAB-DETR" />
+            </list>
+          </settings>
+        </remote-mappings>
+        <remote-mappings server-id="python@sshConfig://root@172.20.5.92:52022 password/var/lib/docker/design/anaconda3/envs/ZSH_old3.7/bin/python3.9">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/var/lib/docker/user1/ZSH/DAB-DETR_mix" />
+            </list>
+          </settings>
+        </remote-mappings>
+      </list>
+    </list>
+  </component>
+</project>

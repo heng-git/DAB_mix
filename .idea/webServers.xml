@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b5c1c4d3-7b95-40dc-9569-16d787348b4a" name="DAB_new">
+        <fileTransfer rootFolder="/var/lib/docker/user1/ZSH" accessType="SFTP" host="172.20.5.92" port="52022" sshConfigId="55417d7b-48da-4997-8088-ac8d4529ffeb" sshConfig="root@172.20.5.92:52022 password">
+          <advancedOptions>
+            <advancedOptions controlEncoding="UTF-8" dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
